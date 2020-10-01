@@ -123,6 +123,65 @@ class Validacion {
     return Schema.validate(data, { abortEarly: false })
   }
 
+  public Marker(data:any){
+    let Schema = Joi.object().keys({
+      'latitude' : Joi.string()
+        .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+        .required()
+        .messages({
+          'string.empty': 'La latitud no puede ser un campo vacio',
+          'string.pattern.base' : 'La latitud tiene que ser valido',
+          'any.required': 'La latitud es requerido'
+        }),
+        'longitude' : Joi.string()
+        .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+        .required()
+        .messages({
+          'string.empty': 'La longitud no puede ser un campo vacio',
+          'string.pattern.base' : 'La longitud tiene que ser valido',
+          'any.required': 'La longitud es requerido'
+        }),
+        'category' : Joi.string()
+        .empty()
+        .trim()
+        .required()
+        .messages({
+          'string.base': 'La categoria es invalida',
+          'string.empty': 'La categoria es invalida',
+          'any.required': 'La categoria es requerida'
+        }),
+        'title': Joi.string()
+        .min(4)
+        .max(40)
+        .required()
+        .messages({
+          'string.base': 'El titulo tiene que ser solo texto',
+          'string.empty': 'El titulo no puede ser un campo vacio',
+          'string.min':  'El titulo tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'El titulo tiene que tener {#limit} caracteres como maximo ',
+          'any.required': 'El titulo es requerido'
+        }),
+
+  
+  
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+
+  public Category(data:any){
+    let Schema = Joi.object().keys({
+      'name' : Joi.string()
+        .empty()
+        .trim()
+        .required()
+        .messages({
+          'string.base': 'La categoria es invalida',
+          'string.empty': 'La categoria es invalida',
+          'any.required': 'La categoria es invalida'
+        }),
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
 
 }
 
