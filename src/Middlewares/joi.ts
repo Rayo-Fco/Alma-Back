@@ -183,6 +183,29 @@ class Validacion {
     return Schema.validate(data, { abortEarly: false })
   }
 
+
+  public CheckPoint(data:any){
+    let Schema = Joi.object().keys({
+      'latitude' : Joi.string()
+        .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+        .required()
+        .messages({
+          'string.empty': 'La latitud no puede ser un campo vacio',
+          'string.pattern.base' : 'La latitud tiene que ser valido',
+          'any.required': 'La latitud es requerido'
+        }),
+        'longitude' : Joi.string()
+        .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+        .required()
+        .messages({
+          'string.empty': 'La longitud no puede ser un campo vacio',
+          'string.pattern.base' : 'La longitud tiene que ser valido',
+          'any.required': 'La longitud es requerido'
+        })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+
 }
 
 

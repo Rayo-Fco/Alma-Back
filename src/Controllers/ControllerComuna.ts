@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Comuna from '../Models/Comuna';
 import classifyPoint from 'robust-point-in-polygon'
-
+import Joi from '../Middlewares/joi'
 
 export class ComunaController {
     constructor(){}
@@ -24,11 +24,16 @@ export class ComunaController {
     
 
     public async CheckPoint(req:Request, res:Response){
+        console.log(req.body);
+        const {error} = Joi.CheckPoint(req.body) 
+        console.log(error);
+        if(error)   return res.status(400).send({error:[{ message: error.details}]})
+        
         type Point = [number, number];
         let latitude = req.body.latitude
         let longitude = req.body.longitude
         let comuna = await Comuna.find({},{comuna:1,coordinates:2,phone:3})
-        let info = {comuna: "Solo disponible RM", phone:0}
+        let info = {    comuna: "xxx", phone:0   }
         comuna.map(com =>{
             let data:Point[] = com.coordinates.map( e => [e.longitude,e.latitude])
             let a = classifyPoint(data,[longitude,latitude])

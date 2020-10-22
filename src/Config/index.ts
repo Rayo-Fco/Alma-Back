@@ -2,9 +2,9 @@ export default
 {
     port: process.env.PORT || 3001,
     database: {
-        URI: process.env.MONGODB_URI || 'mongodb://localhost/alma',
-        USER: process.env.MONGODB_USER,
-        PASSWORD: process.env.MONGODB_PASSWORD
+        URI: 'mongodb://64.225.45.215:27017/alma',
+        USER: 'SuperUser',
+        PASSWORD: 'Alma2020'
       },
     SECRET_TOKEN: "Alma2020tesis",
     Password_Salt: 10,

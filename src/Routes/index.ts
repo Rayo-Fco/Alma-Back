@@ -17,7 +17,7 @@ api.post('/markers/add', CtrlMarker.addMarker)
 api.get('/categories', CtrlCategory.getCategory)
 api.post('/categories/add', CtrlCategory.addCategory)
 
-api.get('/checkpoint', CtrlComuna.CheckPoint)
+api.post('/checkpoint', CtrlComuna.CheckPoint)
 
 api.post('/comuna/add',CtrlComuna.addComuna)
 
