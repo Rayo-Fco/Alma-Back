@@ -69,7 +69,7 @@ class Validacion {
         .messages({
           'string.base': 'El rut es invalido',
           'string.empty': 'El rut no puede ser un campo vacio',
-          'string.pattern.base':'El rut es invalido',
+          'string.pattern.base':'El rut es invalido ej: 1.111.111-1',
           'any.required': 'El rut es requerido'
         }),
 
