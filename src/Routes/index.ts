@@ -3,6 +3,7 @@ import CtrlUser from '../Controllers/ControllerUser'
 import CtrlMarker from '../Controllers/ControllerMarker'
 import CtrlCategory from '../Controllers/ControllerCategory'
 import CtrlComuna from '../Controllers/ControllerComuna'
+import CtrlAdmin from '../Controllers/ControllerAdmin'
 const api = Router()
 
 
@@ -22,4 +23,6 @@ api.post('/checkpoint', CtrlComuna.CheckPoint)
 api.post('/comuna/add',CtrlComuna.addComuna)
 api.post('/validrut', CtrlUser.validrut)
 
+api.post('/admin/add',CtrlAdmin.RegisterAdmin)
+api.post('/admin/login',CtrlAdmin.LoginIn)
 export default api;
