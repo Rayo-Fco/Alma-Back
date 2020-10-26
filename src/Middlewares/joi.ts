@@ -65,11 +65,11 @@ class Validacion {
         .empty()
         .trim()
         .required()
-        .pattern(/^([1-9]{1}\d{0,1}\.\d{3}\.\d{3})+-[0-9kK]{1}$/)
+        .pattern(/^([0-9]{1}\d{0,1}\.\d{3}\.\d{3})+-[0-9kK]{1}$/)
         .messages({
           'string.base': 'El rut es invalido',
           'string.empty': 'El rut no puede ser un campo vacio',
-          'string.pattern.base':'El rut es invalido ej: 1.111.111-1',
+          'string.pattern.base':'El rut es invalido ej: 01.111.111-1',
           'any.required': 'El rut es requerido'
         }),
 
@@ -205,6 +205,65 @@ class Validacion {
     })
     return Schema.validate(data, { abortEarly: false })
   }
+
+  public Admin(data:any){
+    let Schema = Joi.object().keys({
+      'nombre': Joi.string()
+      .min(4)
+      .max(40)
+      .pattern(/^[a-zA-Z]+$/)
+      .required()
+      .messages({
+          'string.base': 'El nombre tiene que ser solo texto',
+          'string.empty': 'El nombre no puede ser un campo vacio',
+          'string.min':  'El nombre tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
+          'string.pattern.base' : 'El nombre tiene que tener solo texto',
+          'any.required': 'El nombre es requerido'
+        }),
+
+      'apellido': Joi.string()
+      .min(4)
+      .max(40)
+      .pattern(/^[a-zA-Z]+$/)
+      .required()
+      .messages({
+          'string.base': 'El apellido tiene que ser solo texto',
+          'string.empty': 'El apellido no puede ser un campo vacio',
+          'string.min':  'El apellido tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'El apellido tiene que tener {#limit} caracteres como maximo ',
+          'string.pattern.base' : 'El apellido tiene que tener solo texto',
+          'any.required': 'El apellido es requerido'
+        }),
+      'email' : Joi.string()
+      .min(4)
+      .max(120)
+      .email()
+      .required()
+      .messages({
+        'string.empty': 'El email no puede ser un campo vacio',
+        'string.min':  'El email tiene que ser valido',
+        'string.max': 'El email tiene que tener {#limit} caracteres como maximo ',
+        'string.email' : 'El email tiene que ser valido',
+        'any.required': 'El email es requerido'
+      }),
+      'password': Joi.string()
+        .min(6)
+        .max(255)
+        .required()
+        .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+        .messages({
+          'string.base': 'La password tiene que ser solo texto',
+          'string.empty': 'La password no puede ser un campo vacio',
+          'string.min':  'La password tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'La password tiene que tener {#limit} caracteres como maximo ',
+          'string.pattern.base' : 'La password tiene que tener al menos una letra mayuscula, una letra minuscula y un numero',
+          'any.required': 'La password es requerido'
+        })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+
 
 }
 
