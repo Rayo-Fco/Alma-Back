@@ -4,6 +4,8 @@ import morgan from 'morgan';
 import config from './Config'
 import api from './Routes'
 import { Database } from './database'
+import passport from 'passport';
+import { user, admin} from './Middlewares/passport'
 
 class App{
   public express: express.Application;
@@ -27,6 +29,8 @@ class App{
     this.express.use(express.json());
     this.express.use(express.urlencoded({extended: false}));
     
+    passport.use('user', user)
+    passport.use('admin',admin)
   }
 
   private routes(): void {

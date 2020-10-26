@@ -7,6 +7,11 @@ export interface ICheckin extends Document {
         latitude:Number,
         longitude: Number
     };
+    info:{
+        numero_depto:String,
+        numero_piso:String,
+        extra:String
+    }
     date: Date
   };
   
@@ -29,6 +34,17 @@ const CheckinSchema = new Schema({
         longitude:{
             type: Number,
             required:true
+        }
+    },
+    info:{
+        numero_depto:{
+            type: String,
+        },
+        numero_piso:{
+            type: String,
+        },
+        extra:{
+            type: String,
         }
     },
     date:{

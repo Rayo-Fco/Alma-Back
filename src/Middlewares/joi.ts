@@ -263,6 +263,48 @@ class Validacion {
     })
     return Schema.validate(data, { abortEarly: false })
   }
+  public Checkin(data:any){
+    let Schema = Joi.object().keys({
+      'numero_depto': Joi.string()
+      .empty('')
+      .max(50)
+      .messages({
+          'string.base': 'El nombre tiene que ser solo texto',
+          'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
+        }),
+      'numero_piso': Joi.object().keys()
+        .empty('')
+        .max(50)
+        .messages({
+            'string.base': 'El nombre tiene que ser solo texto',
+            'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
+          }),
+        'extra': Joi.string()
+        .empty('')
+        .max(400)
+        .messages({
+            'string.base': 'El nombre tiene que ser solo texto',
+            'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
+          }),
+          'latitude' : Joi.string()
+          .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+          .required()
+          .messages({
+            'string.empty': 'La latitud no puede ser un campo vacio',
+            'string.pattern.base' : 'La latitud tiene que ser valido',
+            'any.required': 'La latitud es requerido'
+          }),
+          'longitude' : Joi.string()
+          .pattern(/^(-?\d+(\d+)?)\.\s*(-?\d+(\d+)?)$/)
+          .required()
+          .messages({
+            'string.empty': 'La longitud no puede ser un campo vacio',
+            'string.pattern.base' : 'La longitud tiene que ser valido',
+            'any.required': 'La longitud es requerido'
+          })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
 
 
 }

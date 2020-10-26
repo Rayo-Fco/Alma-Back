@@ -1,5 +1,5 @@
 import User from '../Models/User';
-///import Admin from '../Models/Admin';
+import Admin from '../Models/Admin';
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 import config from '../Config'
 
@@ -10,7 +10,7 @@ import config from '../Config'
   };
 
   console.log("leee");
-/*   export const admin = new Strategy(opts, async (payload, done) => {
+export const admin = new Strategy(opts, async (payload, done) => {
         const admin = await Admin.findById(payload.id);
         if (admin) {
           return done(null, admin);
@@ -18,7 +18,7 @@ import config from '../Config'
         
         return done(null, false)
         
-  })  */
+  })  
 
   export const user = new Strategy(opts, async (payload, done) => {
       const user = await User.findById(payload.id);

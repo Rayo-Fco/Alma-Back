@@ -4,6 +4,8 @@ import CtrlMarker from '../Controllers/ControllerMarker'
 import CtrlCategory from '../Controllers/ControllerCategory'
 import CtrlComuna from '../Controllers/ControllerComuna'
 import CtrlAdmin from '../Controllers/ControllerAdmin'
+import CtrlCheckin from '../Controllers/ControllerCheckin'
+import Passport from 'passport'
 const api = Router()
 
 
@@ -25,4 +27,8 @@ api.post('/validrut', CtrlUser.validrut)
 
 api.post('/admin/add',CtrlAdmin.RegisterAdmin)
 api.post('/admin/login',CtrlAdmin.LoginIn)
+
+api.post('/checkin', Passport.authenticate('user',{session: false}), CtrlCheckin.addCheckin)
+api.get('/checkin/all',CtrlCheckin.getallCheckin)
+
 export default api;
