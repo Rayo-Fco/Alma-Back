@@ -272,7 +272,7 @@ class Validacion {
           'string.base': 'El nombre tiene que ser solo texto',
           'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
         }),
-      'numero_piso': Joi.object().keys()
+      'numero_piso': Joi.string()
         .empty('')
         .max(50)
         .messages({

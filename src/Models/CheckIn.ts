@@ -3,15 +3,15 @@ import { model, Schema, Document } from "mongoose";
 export interface ICheckin extends Document {
     user: Schema.Types.ObjectId;
     comuna: String;
-    coordinates:{ 
+    coordinates:[{ 
         latitude:Number,
         longitude: Number
-    };
-    info:{
+    }];
+    info:[{
         numero_depto:String,
         numero_piso:String,
         extra:String
-    }
+    }]
     date: Date
   };
   
@@ -26,7 +26,7 @@ const CheckinSchema = new Schema({
         type:String,
         required:true
     },
-    coordinates:{
+    coordinates:[{
         latitude:{
             type: Number,
             required:true
@@ -35,8 +35,8 @@ const CheckinSchema = new Schema({
             type: Number,
             required:true
         }
-    },
-    info:{
+    }],
+    info:[{
         numero_depto:{
             type: String,
         },
@@ -46,7 +46,7 @@ const CheckinSchema = new Schema({
         extra:{
             type: String,
         }
-    },
+    }],
     date:{
         type:Date,
         default:Date.now
