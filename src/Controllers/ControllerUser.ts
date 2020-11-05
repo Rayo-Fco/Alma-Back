@@ -60,6 +60,19 @@ export class UserController {
 
     }
 
+    public async getUserToken(req:Request, res:Response){
+        if(req.user)
+        {
+            //@ts-ignore
+            let user = await User.findById(req.user._id,{password:0,fecha_actualizacion:0,__v:0})
+            return res.status(200).json(user)
+        }
+        else
+        { 
+            return res.status(400).send({ mensaje: 'Usuario invalido'})
+        }
+    }
+
 }
 
 function CreateToken(user:IUser){

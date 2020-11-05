@@ -5,7 +5,7 @@ import config from './Config'
 import api from './Routes'
 import { Database } from './database'
 import passport from 'passport';
-import { user, admin} from './Middlewares/passport'
+import { user, admin, multi} from './Middlewares/passport'
 
 class App{
   public express: express.Application;
@@ -31,6 +31,7 @@ class App{
     
     passport.use('user', user)
     passport.use('admin',admin)
+    passport.use('multi',multi)
   }
 
   private routes(): void {

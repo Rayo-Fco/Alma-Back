@@ -11,26 +11,32 @@ const api = Router()
 
 api.post('/register', CtrlUser.RegisterUser)
 api.post('/login', CtrlUser.LoginIn)
+api.get('/user',Passport.authenticate('multi',{session: false}), CtrlUser.getUserToken)
 
-api.get('/markers', CtrlMarker.getMarker)
-api.get('/markers/pdi', CtrlMarker.getMarkerPDI)
-api.get('/markers/comisaria', CtrlMarker.getMarkerComisaria) 
-api.post('/markers/add', CtrlMarker.addMarker)
+api.get('/markers', Passport.authenticate('user',{session: false}), CtrlMarker.getMarker)
+api.get('/markers/pdi', Passport.authenticate('multi',{session: false}), CtrlMarker.getMarkerPDI)
+api.get('/markers/comisaria', Passport.authenticate('multi',{session: false}), CtrlMarker.getMarkerComisaria) 
+api.post('/markers/add', Passport.authenticate('admin',{session: false}), CtrlMarker.addMarker)
 
-api.get('/categories', CtrlCategory.getCategory)
-api.post('/categories/add', CtrlCategory.addCategory)
+api.get('/categories', Passport.authenticate('admin',{session: false}), CtrlCategory.getCategory)
+api.post('/categories/add', Passport.authenticate('admin',{session: false}), CtrlCategory.addCategory)
 
-api.post('/checkpoint', CtrlComuna.CheckPoint)
+api.post('/checkpoint', Passport.authenticate('user',{session: false}), CtrlComuna.CheckPoint)
 
-api.post('/comuna/add',CtrlComuna.addComuna)
+api.post('/comuna/add', Passport.authenticate('admin',{session: false}),CtrlComuna.addComuna)
 api.post('/validrut', CtrlUser.validrut)
 
-api.post('/admin/add',CtrlAdmin.RegisterAdmin)
+api.post('/admin/add', Passport.authenticate('admin',{session: false}),CtrlAdmin.RegisterAdmin)
 api.post('/admin/login',CtrlAdmin.LoginIn)
 
+
+
 api.post('/checkin', Passport.authenticate('user',{session: false}), CtrlCheckin.addCheckin)
-api.get('/checkin/all',CtrlCheckin.getallCheckin)
 api.get('/checkin/user', Passport.authenticate('user',{session: false}), CtrlCheckin.getCheckin)
-api.get('/checkin/user/:id',Passport.authenticate('user',{session: false}), CtrlCheckin.getCheckinUser)
+
+api.get('/checkin/user/:id',Passport.authenticate('admin',{session: false}), CtrlCheckin.getCheckinUser)
+api.get('/checkin/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
+
+
 
 export default api;

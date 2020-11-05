@@ -9,7 +9,20 @@ import config from '../Config'
     secretOrKey: config.SECRET_TOKEN
   };
 
-  console.log("leee");
+  export const multi = new Strategy(opts, async (payload, done) => {
+    const admin = await Admin.findById(payload.id);
+    if (admin) {
+      return done(null, admin);
+    }
+    const user = await User.findById(payload.id);
+    if (user) {
+      return done(null, user);
+    }
+    
+    return done(null, false)
+    
+}) 
+
 export const admin = new Strategy(opts, async (payload, done) => {
         const admin = await Admin.findById(payload.id);
         if (admin) {
