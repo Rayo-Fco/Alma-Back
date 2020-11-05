@@ -68,8 +68,7 @@ export class CheckinController {
 
     public async getallCheckin(req:Request, res:Response){
         if(req.user)
-        {
-            
+        {  
             let check = await Checkin.aggregate([
                 {
                 $lookup:
@@ -94,7 +93,6 @@ export class CheckinController {
             return res.status(400).send({ mensaje: 'Usuario invalido'})
         }
     }
-
     public async getCheckin(req:Request, res:Response){
         if(req.user)
         {
@@ -150,7 +148,26 @@ export class CheckinController {
             return res.status(400).send({ mensaje: 'Usuario invalido'})
         }
     }
-    
+    public async getallCheckin2(req:Request, res:Response){
+         let check = await Checkin.aggregate([
+             {
+               $lookup:
+                 {
+                    from: "users",
+                    localField: "user",
+                    foreignField: "_id",
+                    as: "user"
+                 }
+            },{
+                $project:
+                {
+                    _id:0,
+                    user:{_id:0, password:0, fecha_registro:0}
+                }
+            }    
+         ]);
+         return res.status(200).send(check) 
+     }    
 }
 
 

@@ -33,10 +33,15 @@ api.post('/admin/login',CtrlAdmin.LoginIn)
 
 api.post('/checkin', Passport.authenticate('user',{session: false}), CtrlCheckin.addCheckin)
 api.get('/checkin/user', Passport.authenticate('user',{session: false}), CtrlCheckin.getCheckin)
+<<<<<<< HEAD
 
 api.get('/checkin/user/:id',Passport.authenticate('admin',{session: false}), CtrlCheckin.getCheckinUser)
 api.get('/checkin/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
 
 
+=======
+api.get('/checkin/user/:id',Passport.authenticate('admin',{session: false}), CtrlCheckin.getCheckinUser)
+api.get('/checkin/all2',CtrlCheckin.getallCheckin2)
+>>>>>>> 603d0924c5f1303fafbf704b8fae2ee06c6b1170
 
 export default api;
