@@ -34,9 +34,9 @@ api.post('/admin/login',CtrlAdmin.LoginIn)
 api.post('/checkin', Passport.authenticate('user',{session: false}), CtrlCheckin.addCheckin)
 api.get('/checkin/user', Passport.authenticate('user',{session: false}), CtrlCheckin.getCheckin)
 
-
 api.get('/checkin/user/:id',Passport.authenticate('admin',{session: false}), CtrlCheckin.getCheckinUser)
 api.get('/checkin/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
+
 
 
 
