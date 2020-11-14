@@ -8,5 +8,9 @@ export default
       },
     SECRET_TOKEN: "Alma2020tesis",
     Password_Salt: 10,
+    aws:{
+      ACCESSKEY_ID: 'AKIAYU6BFCY7DOYESCKZ',
+      SECRETACCESS_KEY: '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',
+    }
 
  }
