@@ -73,6 +73,90 @@ export class UserController {
         }
     }
 
+    public async updateUser(req:Request, res:Response){
+        if (req.user)
+        {
+            if(req.body.email && req.body.telefono && req.body.password)
+            {
+                let correo = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i
+                let pass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/
+                let tele = /^[1-9]{1}[0-9]{8}$/
+
+                if(correo.test(req.body.email))
+                {
+                    if(tele.test(req.body.telefono))
+                    {
+                        if(pass.test(req.body.password))
+                        {
+                            //@ts-ignore
+                            let ValidarPass = await Bcrypt.compare(req.body.password, req.user.password)
+                            if (!ValidarPass) return res.status(400).send({error:[{ message: 'Email y/o Password incorrecto'}]});
+                            //validar password
+                                if(req.body.confirmPassword)
+                                {
+                                    if(pass.test(req.body.confirmPassword))
+                                    {
+                                        const ClaveEncriptada = await EncryptKey(req.body.confirmPassword)
+                                        //@ts-ignore
+                                            const usuario:IUser = req.user
+                                            await User.findOneAndUpdate({_id:usuario._id}, {
+                                                email:req.body.email,
+                                                telefono:req.body.telefono,
+                                                password:ClaveEncriptada,
+                                                fecha_actualizacion:new Date(Date.now())
+                                            },(error)=>{
+                                            if(error) return res.status(500).send({error:[{ message:`Error al actualizar el Usuario: ${error}` }]})
+                                            return res.status(200).send({ mensaje: "Se a actualizado el usuario con exito"})
+                                        
+                                        }) 
+                                    }
+                                    else
+                                    {
+                                        return res.status(500).send({error:[{ message: 'Error! La nueva contraseña tiene que tener al menos una letra mayuscula, una letra minuscula y un numero, con 6 caracteres como minimo' }]})
+                                    }
+                                }
+                                else
+                                {
+                                    //@ts-ignore
+                                    const usuario:IUser = req.user
+                                    await User.findOneAndUpdate({_id:usuario._id}, {
+                                        email:req.body.email,
+                                        telefono:req.body.telefono,
+                                        fecha_actualizacion:new Date(Date.now())
+                                    },(error)=>{
+                                      if(error) return res.status(500).send({error:[{ message:`Error al actualizar el Usuario: ${error}` }]})
+                                      return res.status(200).send({ mensaje: "Se a actualizado el usuario con exito"})
+                                  
+                                   }) 
+                                }
+                        }
+                        else
+                        {
+                            return res.status(500).send({error:[{ message: 'Error! Contraseña invalida' }]})
+                        }
+                    }
+                    else
+                    {
+                        return res.status(500).send({error:[{ message: 'Error! Telefono invalido' }]})
+                    }
+                }
+                else
+                {
+                    return res.status(500).send({error:[{ message: 'Error! Correo invalido' }]})
+                }
+            }
+            else
+            {
+                return res.status(500).send({error:[{ message: 'Error! Complete todos los campos' }]})
+            }
+
+        }
+        else
+        {
+            return res.status(400).send({ mensaje: 'Usuario invalido' })
+        }
+    }
+
 }
 
 function CreateToken(user:IUser){

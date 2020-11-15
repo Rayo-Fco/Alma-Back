@@ -37,7 +37,7 @@ api.get('/checkin/user', Passport.authenticate('user',{session: false}), CtrlChe
 api.get('/checkin/user/:id',Passport.authenticate('admin',{session: false}), CtrlCheckin.getCheckinUser)
 api.get('/checkin/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
 
-
+api.post('/updateuser',Passport.authenticate('user',{session: false}), CtrlUser.updateUser)
 
 
 export default api;

@@ -183,7 +183,6 @@ class Validacion {
     return Schema.validate(data, { abortEarly: false })
   }
 
-
   public CheckPoint(data:any){
     let Schema = Joi.object().keys({
       'latitude' : Joi.string()
@@ -305,6 +304,8 @@ class Validacion {
     })
     return Schema.validate(data, { abortEarly: false })
   }
+
+
 
 
 }
