@@ -44,6 +44,6 @@ api.post('/helpSOS',Passport.authenticate('user',{session:false}), CtrlHelp.addH
 api.get('/gethelp', CtrlHelp.getHelp)
 
 api.get('/helpSOS/user/:id',Passport.authenticate('admin',{session:false}), CtrlHelp.getHelRut)
-api.get('/helpSOS/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
+api.get('/helpSOS/all', Passport.authenticate('admin',{session: false}),CtrlHelp.getHelpAll)
 
 export default api;
