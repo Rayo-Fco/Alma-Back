@@ -3,6 +3,7 @@ import Help from '../Models/Help'
 import Joi from '../Middlewares/joi'
 import jwt from 'jsonwebtoken';
 import { Schema } from 'mongoose';
+import CtrlComuna from './ControllerComuna'
 
 export class HelpController {
     constructor() { }
@@ -31,9 +32,12 @@ export class HelpController {
                 if (!existe) {
                     console.log("no Existe dia");
                     const token = CreateToken(id_user)
+                    const comuna = await CtrlComuna.valid_comuna(req.body.latitude,req.body.longitude)
+                    console.log("A"+comuna.comuna);
                     validhelp.puntos.push({
                         date: fecha,
                         token: token,
+                        comuna: comuna.comuna,
                         coordinates: [{
                             latitude: req.body.latitude,
                             longitude: req.body.longitude
@@ -48,11 +52,14 @@ export class HelpController {
             else {
 
                 const token = CreateToken(id_user)
+                const comuna = await CtrlComuna.valid_comuna(req.body.latitude,req.body.longitude)
+                console.log("B"+comuna.comuna);
                 const newhelp = new Help({
                     user: id_user,
                     puntos: [{
                         token: token,
                         date: fecha,
+                        comuna: comuna.comuna,
                         coordinates: [{
                             latitude: req.body.latitude,
                             longitude: req.body.longitude
@@ -113,13 +120,15 @@ export class HelpController {
         ]);
         if (valid_toke.length > 0) {
             let array: any = []
+            let comuna = ""
             const fecha = new Date(Date.now())
             valid_toke[0].puntos.map((puntos: any) => {
                 if (((fecha.getTime() - puntos.date.getTime()) / 1000 / 60 / 60) < 8) {
                     array = puntos.coordinates
+                    comuna = puntos.comuna
                 }
             })
-            if (array.length > 0) return res.status(200).json({ user: valid_toke[0].user, coordinates: array })
+            if (array.length > 0) return res.status(200).json({ user: valid_toke[0].user,comuna:comuna, coordinates: array })
 
             return res.status(400).send({ error: "Link ya expirado duracion maxima 8 horas" })
         }
@@ -165,7 +174,7 @@ export class HelpController {
         }
     }
 
-    public async getHelpAll(req:Request, res:Response){
+    public async getHelpAll(req: Request, res: Response) {
         if (req.user) {
             const users = await Help.aggregate([
                 {

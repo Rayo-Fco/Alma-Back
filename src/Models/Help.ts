@@ -7,6 +7,7 @@ export interface IHelp extends Document {
     puntos: [{
         date: Date,
         token: String,
+        comuna:String,
         coordinates: [{
             latitude: number,
             longitude: number
@@ -29,6 +30,10 @@ const HelpSchema = new Schema({
         token:{
             type: String,
             required: true
+        },
+        comuna:{
+            type:String,
+            required:true
         },
         coordinates: [{
             date: {

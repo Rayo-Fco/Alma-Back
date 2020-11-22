@@ -6,6 +6,7 @@ import CtrlComuna from '../Controllers/ControllerComuna'
 import CtrlAdmin from '../Controllers/ControllerAdmin'
 import CtrlCheckin from '../Controllers/ControllerCheckin'
 import CtrlHelp from '../Controllers/ControllerHelp'
+import CtrlDashboard from '../Controllers/ControllerDashboard'
 import Passport from 'passport'
 const api = Router()
 
@@ -45,5 +46,7 @@ api.get('/gethelp', CtrlHelp.getHelp)
 
 api.get('/helpSOS/user/:id',Passport.authenticate('admin',{session:false}), CtrlHelp.getHelRut)
 api.get('/helpSOS/all', Passport.authenticate('admin',{session: false}),CtrlCheckin.getallCheckin)
+
+api.get('/dashboard', Passport.authenticate('admin',{session: false}),CtrlDashboard.getDatos)
 
 export default api;
