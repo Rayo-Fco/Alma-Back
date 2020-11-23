@@ -19,7 +19,6 @@ export class HelpController {
             if (validhelp) {
                 let existe = false
                 validhelp.puntos.map((puntos) => {
-                    console.log((fecha.getTime() - puntos.date.getTime()) / 1000 / 60 / 60)
                     if (((fecha.getTime() - puntos.date.getTime()) / 1000 / 60 / 60) < 8) {
                         console.log("encontro el dia");
                         existe = true

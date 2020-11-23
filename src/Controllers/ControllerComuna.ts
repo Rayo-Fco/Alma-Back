@@ -54,6 +54,12 @@ export class ComunaController {
         return res.status(200).send(info)
     }
 
+    public async getComuna(req:Request, res:Response){
+        let comuna = await Comuna.find({},{coordinates:0})
+        return res.status(200).send(comuna)
+        
+ 
+    }
     
 
     public async valid_comuna(latitude:any,longitude:any){
