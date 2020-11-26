@@ -333,14 +333,60 @@ class Validacion {
         .min(15)
         .required()
         .messages({
-          'string.empty': 'Link invaldio',
-          'string.min':  'Link invaldio',
-          'any.required': 'Link invaldio'
-        }) 
+          'string.empty': 'Token invalido',
+          'string.min':  'Token invalido',
+          'any.required': 'Token invalido'
+        })
     })
     return Schema.validate(data, { abortEarly: false })
   }
 
+  public SafeContact(data:any){
+    let Schema = Joi.object().keys({
+      'nombre': Joi.string()
+      .min(1)
+      .max(40)
+      .pattern(/^[a-zA-ZñÑ-\s]+$/)
+      .required()
+      .messages({
+          'string.base': 'El nombre tiene que ser solo texto',
+          'string.empty': 'El nombre no puede ser un campo vacio',
+          'string.min':  'El nombre tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'El nombre tiene que tener {#limit} caracteres como maximo ',
+          'string.pattern.base' : 'El nombre tiene que tener solo texto',
+          'any.required': 'El nombre es requerido'
+        }),
+        'telefono': Joi.string()
+        .empty()
+        .trim()
+        .required()
+        .pattern(/^[1-9]{1}[0-9]{8}$/)
+        .messages({
+          'string.base': 'El telefono es invalido',
+          'string.empty': 'El telefono no puede ser un campo vacio',
+          'string.pattern.base':'El telefono es invalido',
+          'any.required': 'El telefono es requerido'
+        })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+
+  public ValidIndex (data:any){
+    let Schema = Joi.object().keys({
+        'index': Joi.string()
+        .empty()
+        .trim()
+        .required()
+        .pattern(/^[0-3]{1}$/)
+        .messages({
+          'string.base': 'El index es invalido',
+          'string.empty': 'El index no puede ser un campo vacio',
+          'string.pattern.base':'El index es invalido',
+          'any.required': 'El index es requerido'
+        })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
 
 }
 

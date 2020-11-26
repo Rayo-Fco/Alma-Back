@@ -11,6 +11,7 @@ export default
     aws:{
       ACCESSKEY_ID: 'AKIAYU6BFCY7DOYESCKZ',
       SECRETACCESS_KEY: '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',
-    }
+    },
+    url:"http://localhost:3000"
 
  }

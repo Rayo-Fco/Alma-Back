@@ -4,6 +4,8 @@ import Joi from '../Middlewares/joi'
 import jwt from 'jsonwebtoken';
 import { Schema } from 'mongoose';
 import CtrlComuna from './ControllerComuna'
+import CtrlSafeContacts from './ControllerSafeContacts'
+import Config from '../Config'
 
 export class HelpController {
     constructor() { }
@@ -31,8 +33,8 @@ export class HelpController {
                 if (!existe) {
                     console.log("no Existe dia");
                     const token = CreateToken(id_user)
-                    const comuna = await CtrlComuna.valid_comuna(req.body.latitude,req.body.longitude)
-                    console.log("A"+comuna.comuna);
+                    const comuna = await CtrlComuna.valid_comuna(req.body.latitude, req.body.longitude)
+                    console.log("A" + comuna.comuna);
                     validhelp.puntos.push({
                         date: fecha,
                         token: token,
@@ -42,6 +44,18 @@ export class HelpController {
                             longitude: req.body.longitude
                         }]
                     })
+                    const contactos = await CtrlSafeContacts.getContactos(id_user)
+                    if(contactos){
+                        //@ts-ignore
+                        const nombre_apellido = req.user.nombre+" "+req.user.apellido
+                        CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                    }
+                    else
+                    {
+                        return res.status(400).send({ error: [{ message: 'Tiene que agregar al menos un contacto de seguridad' }] })
+                    }
+                    
+                    
                 }
                 await validhelp.save((err) => {
                     if (err) return res.status(500).send({ error: [{ message: `Error al crear la Alerta SOS: ${err}` }] })
@@ -51,8 +65,8 @@ export class HelpController {
             else {
 
                 const token = CreateToken(id_user)
-                const comuna = await CtrlComuna.valid_comuna(req.body.latitude,req.body.longitude)
-                console.log("B"+comuna.comuna);
+                const comuna = await CtrlComuna.valid_comuna(req.body.latitude, req.body.longitude)
+                console.log("B" + comuna.comuna);
                 const newhelp = new Help({
                     user: id_user,
                     puntos: [{
@@ -65,8 +79,22 @@ export class HelpController {
                         }]
                     }]
                 })
+                const contactos = await CtrlSafeContacts.getContactos(id_user)
+                if(contactos){
+                    //@ts-ignore
+                    const nombre_apellido = req.user.nombre+" "+req.user.apellido
+                    CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                }
+                else
+                {
+                    return res.status(400).send({ error: [{ message: 'Tiene que agregar al menos un contacto de seguridad' }] })
+                }
                 await newhelp.save((err) => {
                     if (err) return res.status(500).send({ error: [{ message: `Error al crear la Alerta SOS: ${err}` }] })
+
+
+
+
                     return res.status(200).send({
                         mensaje: `La alerta se ha creado exitosamente`,
                         token: token
@@ -127,7 +155,7 @@ export class HelpController {
                     comuna = puntos.comuna
                 }
             })
-            if (array.length > 0) return res.status(200).json({ user: valid_toke[0].user,comuna:comuna, coordinates: array })
+            if (array.length > 0) return res.status(200).json({ user: valid_toke[0].user, comuna: comuna, coordinates: array })
 
             return res.status(400).send({ error: "Link ya expirado duracion maxima 8 horas" })
         }
@@ -172,6 +200,40 @@ export class HelpController {
             return res.status(400).send({ mensaje: 'Usuario invalido' })
         }
     }
+
+    public async ValidHelp(req: Request, res: Response) {
+        if (req.user) {
+            const fecha = new Date(Date.now())
+            //@ts-ignore
+            const id_user = req.user._id
+            const validhelp = await Help.findOne({ user: id_user })
+            if (validhelp) {
+                let existe = false
+                validhelp.puntos.map((puntos) => {
+                    if (((fecha.getTime() - puntos.date.getTime()) / 1000 / 60 / 60) < 8) {
+                        console.log("encontro el dia");
+                        existe = true
+                    }
+                })
+                if (existe)
+                {
+                    return res.status(200).send({ valido: true })
+                }
+                else
+                {
+                    return res.status(400).send({ valido: false })
+                }
+            }
+            else {
+                return res.status(200).send({ valido: true })
+            }
+
+        }
+        else {
+            return res.status(400).send({ mensaje: 'Usuario invalido' })
+        }
+    }
+
 
     public async getHelpAll(req: Request, res: Response) {
         if (req.user) {

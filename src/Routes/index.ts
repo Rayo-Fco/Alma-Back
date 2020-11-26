@@ -7,6 +7,7 @@ import CtrlAdmin from '../Controllers/ControllerAdmin'
 import CtrlCheckin from '../Controllers/ControllerCheckin'
 import CtrlHelp from '../Controllers/ControllerHelp'
 import CtrlDashboard from '../Controllers/ControllerDashboard'
+import CtrlSafeContacts from '../Controllers/ControllerSafeContacts'
 import Passport from 'passport'
 const api = Router()
 
@@ -28,12 +29,8 @@ api.post('/checkpoint', Passport.authenticate('user',{session: false}), CtrlComu
 api.post('/comuna/add', Passport.authenticate('admin',{session: false}),CtrlComuna.addComuna)
 api.get('/comuna/all', Passport.authenticate('admin',{session: false}), CtrlComuna.getComuna)
 
-api.post('/validrut', CtrlUser.validrut)
-
 api.post('/admin/add', Passport.authenticate('admin',{session: false}),CtrlAdmin.RegisterAdmin)
 api.post('/admin/login',CtrlAdmin.LoginIn)
-
-
 
 api.post('/checkin', Passport.authenticate('user',{session: false}), CtrlCheckin.addCheckin)
 api.get('/checkin/user', Passport.authenticate('user',{session: false}), CtrlCheckin.getCheckin)
@@ -43,12 +40,18 @@ api.get('/checkin/all', Passport.authenticate('admin',{session: false}),CtrlChec
 
 api.post('/updateuser',Passport.authenticate('user',{session: false}), CtrlUser.updateUser)
 
+api.post('/safecontact/add',Passport.authenticate('user',{session:false}), CtrlSafeContacts.addContact)
+api.get('/safecontact',Passport.authenticate('user',{session:false}),CtrlSafeContacts.getContactosID)
+api.post('/safecontact/delete',Passport.authenticate('user',{session:false}),CtrlSafeContacts.deleteContact)
+
 api.post('/helpSOS',Passport.authenticate('user',{session:false}), CtrlHelp.addHelp)
+api.get('/helpSOS/valid',Passport.authenticate('user',{session:false}), CtrlHelp.ValidHelp)
 api.get('/gethelp', CtrlHelp.getHelp)
 
 api.get('/helpSOS/user/:id',Passport.authenticate('admin',{session:false}), CtrlHelp.getHelRut)
 api.get('/helpSOS/all', Passport.authenticate('admin',{session: false}),CtrlHelp.getHelpAll)
 
 api.get('/dashboard', Passport.authenticate('admin',{session: false}),CtrlDashboard.getDatos)
+
 
 export default api;
