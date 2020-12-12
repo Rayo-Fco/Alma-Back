@@ -388,6 +388,67 @@ class Validacion {
     return Schema.validate(data, { abortEarly: false })
   }
 
+  public SendLink(data:any){
+    let Schema = Joi.object().keys({
+      'email' : Joi.string()
+        .min(4)
+        .max(120)
+        .email()
+        .required()
+        .messages({
+          'string.empty': 'El email no puede ser un campo vacio',
+          'string.min':  'El email tiene que ser valido',
+          'string.max': 'El email tiene que tener {#limit} caracteres como maximo ',
+          'string.email' : 'El email tiene que ser valido',
+          'any.required': 'El email es requerido'
+        })  
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+  public ResetPassword(data:any){
+    let Schema = Joi.object().keys({
+      'email' : Joi.string()
+        .min(4)
+        .max(120)
+        .email()
+        .required()
+        .messages({
+          'string.empty': 'El email no puede ser un campo vacio',
+          'string.min':  'El email tiene que ser valido',
+          'string.max': 'El email tiene que tener {#limit} caracteres como maximo ',
+          'string.email' : 'El email tiene que ser valido',
+          'any.required': 'El email es requerido'
+        }),
+        'token' : Joi.string()
+        .min(15)
+        .required()
+        .messages({
+          'string.empty': 'Link invaldio',
+          'string.min':  'Link invaldio',
+          'any.required': 'Link invaldio'
+        }) 
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+  public Password(data:any){
+    let Schema = Joi.object().keys({
+      'password': Joi.string()
+        .min(6)
+        .max(255)
+        .required()
+        .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+        .messages({
+          'string.base': 'La password tiene que ser solo texto',
+          'string.empty': 'La password no puede ser un campo vacio',
+          'string.min':  'La password tiene que tener {#limit} caracteres como minimo ',
+          'string.max': 'La password tiene que tener {#limit} caracteres como maximo ',
+          'string.pattern.base' : 'La password tiene que tener al menos una letra mayuscula, una letra minuscula y un numero',
+          'any.required': 'La password es requerido'
+        })
+    })
+    return Schema.validate(data, { abortEarly: false })
+  }
+
 }
 
 

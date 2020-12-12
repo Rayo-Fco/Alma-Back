@@ -48,7 +48,7 @@ export class HelpController {
                     if(contactos){
                         //@ts-ignore
                         const nombre_apellido = req.user.nombre+" "+req.user.apellido
-                     //   CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                        CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
                     }
                     else
                     {
@@ -83,7 +83,7 @@ export class HelpController {
                 if(contactos){
                     //@ts-ignore
                     const nombre_apellido = req.user.nombre+" "+req.user.apellido
-                   /// CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                    CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
                 }
                 else
                 {

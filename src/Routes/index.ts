@@ -8,6 +8,7 @@ import CtrlCheckin from '../Controllers/ControllerCheckin'
 import CtrlHelp from '../Controllers/ControllerHelp'
 import CtrlDashboard from '../Controllers/ControllerDashboard'
 import CtrlSafeContacts from '../Controllers/ControllerSafeContacts'
+import CtrlResetPassword from '../Controllers/ControllerResetPassword'
 import Passport from 'passport'
 const api = Router()
 
@@ -54,5 +55,8 @@ api.get('/helpSOS/all', Passport.authenticate('admin',{session: false}),CtrlHelp
 
 api.get('/dashboard', Passport.authenticate('admin',{session: false}),CtrlDashboard.getDatos)
 
+api.post('/login/reset', CtrlResetPassword.SendLink) // enviar el correo de recuperacion
+api.post('/login/reset_password', CtrlResetPassword.UpdatePassword)  // validar password y cambio de la misma
+api.get('/login/reset_password', CtrlResetPassword.ResetPassword) // ingresar a la url
 
 export default api;

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import SafeContacts, { ISafeContacts } from '../Models/SafeContacts';
+import SafeContacts from '../Models/SafeContacts';
 import Joi from '../Middlewares/joi'
-import AWS, { CodeStarNotifications } from 'aws-sdk'
+import AWS from 'aws-sdk'
 import { Schema } from 'mongoose';
-import { user } from '../Middlewares/passport';
+import Config from '../Config'
 
 
 interface contacts {
@@ -91,10 +91,10 @@ export class SafeContactsController {
                     console.log(params);
 
                     var publishTextPromise = new AWS.SNS({
-                        region: 'us-east-1',
-                        accessKeyId: "ASIA2WHZXT7RGOEU22QN",
-                        secretAccessKey: "debU7qRVZEwD49VZs9yWnelOkOGuws11nzVdmxRS",
-                        sessionToken: "FwoGZXIvYXdzEJ///////////wEaDGF4Vs8Q8IY8ZCNwfSLPAeFQyujxiwPL8seHzgel2jcfyVdlRDphUr+XK7ahVxQRmlRlyeu01MTqXREqyGfQBTHYWH+4xXBu3jcFZwAg8YNcDIRMJbEZ9Rb4KrPtNSBomtxvPc6vrHpZc8oaDJXCZfZkWXR9j81Pb1vpTuQeaay3/XjtQ6wxG3FQqW+rlRheRM4POWp8uh25GmygJVS9tRHkHF2lwkMHsRsLfKKoQ94eTG0r6IFVd8LmwoHQP8n7JU296Iy786x/J/Gaf1P6PkDDkwz360LhMIH6Q9O8vSik5f79BTIt6QYyQwwTNSR4XRsENdx0EBFP+LepcYBxCwLD1TIpoECxI6uznLabGlDq1zgd",
+                        region: Config.sns.region,
+                        accessKeyId: Config.sns.accessKeyId,
+                        secretAccessKey: Config.sns.secretAccessKey,
+                        sessionToken: Config.sns.sessionToken,
                         apiVersion: '2010-03-31'
                     }).publish(params).promise();
 
