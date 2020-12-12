@@ -12,6 +12,13 @@ interface comu {
 export class ComunaController {
     constructor(){}
 
+    public async getCoordinates(req:Request, res:Response){
+        let comuna = await Comuna.aggregate(
+            [ { $match : { comuna : req.body.comuna } } ]
+        );
+        return res.status(200).json(comuna)
+    }
+
     public async addComuna(req:Request, res:Response){
         let comuna = await Comuna.findOne({ comuna: req.body.comuna})
         if(comuna) return res.status(400).json({ message:' ya se encuentra registrado'})

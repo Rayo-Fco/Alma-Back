@@ -28,6 +28,7 @@ api.post('/checkpoint', Passport.authenticate('user',{session: false}), CtrlComu
 
 api.post('/comuna/add', Passport.authenticate('admin',{session: false}),CtrlComuna.addComuna)
 api.get('/comuna/all', Passport.authenticate('admin',{session: false}), CtrlComuna.getComuna)
+api.post('/comuna/coordinates',Passport.authenticate('admin',{session: false}), CtrlComuna.getCoordinates)
 
 api.post('/admin/add', Passport.authenticate('admin',{session: false}),CtrlAdmin.RegisterAdmin)
 api.post('/admin/login',CtrlAdmin.LoginIn)

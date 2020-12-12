@@ -48,7 +48,7 @@ export class HelpController {
                     if(contactos){
                         //@ts-ignore
                         const nombre_apellido = req.user.nombre+" "+req.user.apellido
-                        CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                     //   CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
                     }
                     else
                     {
@@ -83,7 +83,7 @@ export class HelpController {
                 if(contactos){
                     //@ts-ignore
                     const nombre_apellido = req.user.nombre+" "+req.user.apellido
-                    CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
+                   /// CtrlSafeContacts.sendSMS(contactos,token,Config.url, nombre_apellido)
                 }
                 else
                 {
@@ -202,7 +202,7 @@ export class HelpController {
     }
 
     public async ValidHelp(req: Request, res: Response) {
-        if (req.user) {
+        if (req.user){
             const fecha = new Date(Date.now())
             //@ts-ignore
             const id_user = req.user._id
@@ -217,15 +217,16 @@ export class HelpController {
                 })
                 if (existe)
                 {
-                    return res.status(200).send({ valido: true })
+                    return res.status(200).send(true)
                 }
                 else
                 {
-                    return res.status(400).send({ valido: false })
+                    return res.status(200).send(false)
                 }
             }
-            else {
-                return res.status(200).send({ valido: true })
+            else 
+            {
+                return res.status(200).send(true)
             }
 
         }

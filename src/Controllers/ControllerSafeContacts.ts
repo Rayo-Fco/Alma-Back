@@ -92,9 +92,9 @@ export class SafeContactsController {
 
                     var publishTextPromise = new AWS.SNS({
                         region: 'us-east-1',
-                        accessKeyId: "ASIA2WHZXT7RITOL23MT",
-                        secretAccessKey: "/D1gWMHOXNHtMOewdLkx9XjZrarjhkdJydWZ6Y07",
-                        sessionToken: "FwoGZXIvYXdzEJD//////////wEaDAeJizHlKnR7rsLajCLPAdLgOOxvg0nxa1zw3MFfKtE7QMxCs3CaUXUwH6r2W11aNlzE1MyrhCt/4CuslZ/b82dtesomLAmVltYzO4ul2LoxYAcPHa+Y5pOf0iEC6UjM9/qvVJj0m7tUwcmBLzM7oiItYAciCTb0zS1GG87MLCIXDDSv74VXO3rk1l1Wsfv80XDgSMoZlxpjBe9wdm7ySU8M8JVD9/PaESIIjSHUhsjfBSwjPtbdT1g2dcRAkL1oERcpZXXXvQu+laiynMTH36nlSFOjd+g9MDN6A6hS/iiSw/v9BTItn5mIo8cVWULJpLwD4TjOudABpJ2cso2bt2J8tKyJVM9yqU9HWRIIqb8Z1cSs",
+                        accessKeyId: "ASIA2WHZXT7RGOEU22QN",
+                        secretAccessKey: "debU7qRVZEwD49VZs9yWnelOkOGuws11nzVdmxRS",
+                        sessionToken: "FwoGZXIvYXdzEJ///////////wEaDGF4Vs8Q8IY8ZCNwfSLPAeFQyujxiwPL8seHzgel2jcfyVdlRDphUr+XK7ahVxQRmlRlyeu01MTqXREqyGfQBTHYWH+4xXBu3jcFZwAg8YNcDIRMJbEZ9Rb4KrPtNSBomtxvPc6vrHpZc8oaDJXCZfZkWXR9j81Pb1vpTuQeaay3/XjtQ6wxG3FQqW+rlRheRM4POWp8uh25GmygJVS9tRHkHF2lwkMHsRsLfKKoQ94eTG0r6IFVd8LmwoHQP8n7JU296Iy786x/J/Gaf1P6PkDDkwz360LhMIH6Q9O8vSik5f79BTIt6QYyQwwTNSR4XRsENdx0EBFP+LepcYBxCwLD1TIpoECxI6uznLabGlDq1zgd",
                         apiVersion: '2010-03-31'
                     }).publish(params).promise();
 
